@@ -1,0 +1,28 @@
+{
+    "server_name": "draft_model_server",
+    "server_url": "https://aea0-129-78-56-156.ngrok-free.app",
+    "client_url": "http://localhost:8001/results",
+    "verify_url": "https://0f6b-34-143-170-211.ngrok-free.app",
+    "decoding_setting": {
+        "max_tokens": 30,
+        "gen_tokens":0,
+        "temperature": 1.0,
+        "proposal_length": 4
+    },
+
+    "inputs":{
+        "prompt_text": "Children laugh and play",
+        "input_ids": null
+    },
+    
+    "outputs":[],
+    "draft_server_setting": {
+        "draft_id":null
+    },
+    "speculative_data":[],
+    
+    "is_finished":false,
+    "results":{
+        "text":null
+    }
+}
