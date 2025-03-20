@@ -16,6 +16,8 @@ async def receive_result(request: Request):
     result = await request.json()
     # draft_id = result["draft_id"]
     # received_responses[draft_id] = result
+    with open("./res.json", "w") as f:
+        json.dump(result, f, indent=4)
     tokens = [token for token, _ in result["speculative_data"][:10]]
     print(f"Received response: output_tokens[:10]: {tokens}")
     return {"status": "Received"}
