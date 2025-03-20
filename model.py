@@ -2,7 +2,6 @@ import time
 from typing import Dict, List, Any, Union
 import numpy as np
 import torch
-from transformers import AutoTokenizer
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 
 
@@ -94,6 +93,7 @@ class HFModelEngine:
         """Serve as primal model to verify or reject tokens in FIFO order from multiple queues."""
         process_time = time.ctime()
         input_ids = self.make_inputs(input_ids)
+        prompt_length = input_ids.shape[1]
 
         accepted_tokens = []
         current_ids = input_ids.clone()
@@ -125,7 +125,7 @@ class HFModelEngine:
             served_output = self.tokenizer.decode(current_ids[0], skip_special_tokens=True)
         
         gen_tokens += len(accepted_tokens)
-        is_finished = max_tokens - gen_tokens <= 0
+        is_finished = max_tokens - gen_tokens - prompt_length <= 0
         return current_ids.tolist(), served_output, accepted_tokens, gen_tokens, is_finished
 
 

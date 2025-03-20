@@ -98,7 +98,13 @@ def process_verify_request(self, payload):
         payload["decoding_setting"]["gen_tokens"] = gen_tokens
         payload["results"]["text"] = output_results
         payload["outputs"].append({"accepted_tokens": accepted_tokens})
+
         print(f"is_finished: {is_finished}")
+        if payload["is_finished"]:
+            async with httpx.AsyncClient() as client:
+                await client.post(payload["client_url"], json=payload)
+            return payload
+
         async with httpx.AsyncClient() as client:
             await client.post(f"{payload['server_url']}/generate/", json=payload)
         return payload
